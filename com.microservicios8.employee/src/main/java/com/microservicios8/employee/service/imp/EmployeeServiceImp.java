@@ -101,59 +101,66 @@ public class EmployeeServiceImp implements EmployeeService {
 		//mandar a llamar al servicio de workestation
 		//valido si me mandan solo el id
 		//valido que exista el workstation asi como que no este ya asignado
-//		ObjectMapper objectMapper = new ObjectMapper();
-//		if(employee.getWorkstation()!=null) {
-//			if( employee.getWorkstation().getId() != 0 ) {
-//				String ws =cliente.tirapeticionGet(employee.getWorkstation().getId()+"");
-//				 //ws =cliente.tirapeticionGet(employee.getWorkstation().getId()+"");
-//				if(ws.isEmpty()) { //indica que no existe el workstation y hay que crearlo
-//					System.out.print("Esta madre esta vacia " +"\n");
-//					
-//					Employee em = employeeRepository.save(employee);
-//					
-//					WorkStation wos = employee.getWorkstation();
-//					wos.setEmployeeId(em.getId());
-//					String ws1 = cliente.tirarpost(wos);
-//					try {
-//						wos = objectMapper.readValue(ws1, WorkStation.class);
-//					} catch (JsonParseException e) {
-//						// TODO Auto-generated catch block
-//						e.printStackTrace();
-//					} catch (JsonMappingException e) {
-//						// TODO Auto-generated catch block
-//						e.printStackTrace();
-//					} catch (IOException e) {
-//						// TODO Auto-generated catch block
-//						e.printStackTrace();
-//					}
-//					em.setWorkstation(wos);
-//					//return employeeRepository.save(employee);
-//					return em;
-//				}
-//			}else{//si no recibo id tomo lo que venga en el workstation
-//				Employee em = employeeRepository.save(employee);
-//				WorkStation wos = employee.getWorkstation();
-//				wos.setEmployeeId(em.getId());
-//				String ws1 = cliente.tirarpost(wos);
-//				try {
-//					wos = objectMapper.readValue(ws1, WorkStation.class);
-//					em.setWorkstation(wos);
-//				} catch (JsonParseException e) {
-//					// TODO Auto-generated catch block
-//					e.printStackTrace();
-//				} catch (JsonMappingException e) {
-//					// TODO Auto-generated catch block
-//					e.printStackTrace();
-//				} catch (IOException e) {
-//					// TODO Auto-generated catch block
-//					e.printStackTrace();
-//				}
-//				//return employeeRepository.save(employee);
-//				return em;
-//			}
-//			
-//		}
-//			
+		ObjectMapper objectMapper = new ObjectMapper();
+		if(employee.getWorkstation()!=null) {
+			if( employee.getWorkstation().getId() != 0 ) {
+				String ws =cliente.tirapeticionGet(employee.getWorkstation().getId()+"");
+				 ws =cliente.tirapeticionGet(employee.getWorkstation().getId()+"");
+				if(ws.isEmpty()) { //indica que no existe el workstation y hay que crearlo
+					System.out.print("Esta madre esta vacia " +"\n");
+					
+					Employee em = employeeRepository.save(employee);
+					
+					WorkStation wos = employee.getWorkstation();
+					wos.setEmployeeId(em.getId());
+					String ws1 = cliente.tirarpost(wos);
+					
+					try {
+						wos = objectMapper.readValue(ws1, WorkStation.class);
+						
+					} catch (JsonParseException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					
+					} catch (JsonMappingException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+						
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					em.setWorkstation(wos);
+					//return employeeRepository.save(employee);
+					return em;
+				}
+			}else{//si no recibo id tomo lo que venga en el workstation
+				Employee em = employeeRepository.save(employee);
+				WorkStation wos = employee.getWorkstation();
+				wos.setEmployeeId(em.getId());
+				String ws1 = cliente.tirarpost(wos);
+				try {
+					wos = objectMapper.readValue(ws1, WorkStation.class);
+					em.setWorkstation(wos);
+					
+				} catch (JsonParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				
+				} catch (JsonMappingException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					
+				}
+				//return employeeRepository.save(employee);
+				return em;
+			}
+			
+		}			
 		return employeeRepository.save(employee);
 	}
 
